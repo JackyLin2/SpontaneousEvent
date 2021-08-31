@@ -5,7 +5,7 @@ import PlaceDetails from '../PlaceDetails/PlaceDetails'
 
 import makeStyles from './styles'
 
-const List = () => {
+const List = ( {places} ) => {
   const classes = makeStyles()
   const [type, setType] = useState('restaurants')
   const [rating, setRating] = useState(0)
@@ -32,6 +32,12 @@ const List = () => {
                                     <MenuItem value = {4.5}>  Above 4.5 </MenuItem>
                                 </Select>
                     </FormControl>
+                    <Grid container spacing={3} className={classes.list}>
+                        {places?.map((place, index) => (
+                                <PlaceDetails place={place}/> 
+                        ))}
+
+                    </Grid>
         </div>
     ) 
 }
