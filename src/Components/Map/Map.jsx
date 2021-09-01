@@ -1,16 +1,17 @@
 
 import React from 'react'
 import GoogleMapReact from 'google-map-react'
-import { Paper, Typography, useMediaQuery } from '@material-ui/core'
+import { Button, Paper, Typography, useMediaQuery } from '@material-ui/core'
 import LocationOnOutlined from '@material-ui/icons/LocationOnOutlined'
 import Rating from '@material-ui/lab'
 
 import makeStyles  from './styles'
+import PlaceDetails from '../PlaceDetails/PlaceDetails'
 
-const Map = ( {setCoordinates, setBounds, coordinates} ) => {
+const Map = ( {setCoordinates, setBounds, coordinates, place} ) => {
 
    const classes = makeStyles()
-   const isMobile = useMediaQuery("(min-width: 600px)")
+   const isDesktop = useMediaQuery("(min-width: 600px)")
 
 
 
@@ -30,7 +31,32 @@ const Map = ( {setCoordinates, setBounds, coordinates} ) => {
                 }}
                 onChildClick={""}
             >
+                {place?.map((place, i) => (
+                    <div className={ classes.markerContainer}
+                     lat={Number(place.lattitude)} 
+                     lng={Number(place.longitude)}
+                     key={i}
+                     >
+               
+                {
+                    !isDesktop ? (
+                        <LocationOnOutlined color='primary' fontSize='large' />
+                    )  : (
+                        <Paper elevation={3} className={classes.paper}>
+                            <Typography className={classes.typography} variant='subtitle2' gutterBottom>
+                                {place.name}
+                            </Typography>
+                            <img
+                                className={classes.pointer}
+                                src = { place.photo ? place.photo.images.large.url : "http://www.resto.be/across/resources/static/site/images/placeholder-detail-resto.jpg"}
+                                alt={place.name}
+                            />
+                        </Paper>
+                    )
+                }
 
+                </div>
+                ))} 
             </GoogleMapReact>
         
         </div>
