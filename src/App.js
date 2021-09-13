@@ -35,13 +35,15 @@ const App = () => {
     useEffect(() => {
         if(bounds.sw && bounds.ne){
             setIsLoading(true)
-
+            
         getWeather(coordinates.lat, coordinates.lng)
+
         .then((data) => setWeatherData(data) )
         
 
         getPlacesData(type,  bounds.sw , bounds.ne )
             .then((data) => {
+                console.log(data)
                 setPlaces(data?.filter((place) => place.name && place.num_reviews > 0))
                 setFilterPlaces([])
                 setIsLoading(false)
